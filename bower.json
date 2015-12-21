@@ -1,0 +1,24 @@
+{
+  "name": "iris-polymer-ticketlist",
+  "homepage": "https://github.com/sdk-group/iris-polymer-ticketlist",
+  "authors": [
+    "artificial-life <proteus.protocol@gmail.com>"
+  ],
+  "description": "",
+  "main": "iris-ticketlist.html",
+  "moduleType": [],
+  "keywords": [
+    "list"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iris-polymer-importer": "https://github.com/sdk-group/iris-polymer-importer.git"
+  }
+}
