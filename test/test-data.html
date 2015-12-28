@@ -1,0 +1,35 @@
+<script>
+  var test_data = test_data || {};
+  // {
+  //   number: "П-231",
+  //   service: "Test service",
+  //   service_count: 1,
+  //   fields: {
+  //     name: 'My',
+  //     lastname: 'Lastname'
+  //   },
+  //   time_bounds: {
+  //     start: Date.now() - 30 * 1000
+  //   }
+  // }
+  test_data.row_model = [{
+    label: "№ талона",
+    field: 'label'
+  }, {
+    label: 'Услуга',
+    field: 'service'
+  }, {
+    label: 'Число дел',
+    field: 'service_count'
+  }, {
+    label: 'ФИО',
+    field: ['name', 'lastname', 'patronymic'],
+    transform: function(name, lastname, patronymic) {
+      return row.name;
+    }
+  }, {
+    label: 'Время ожидаения',
+    field: ['time_bounds'],
+    transform: 'doomclock'
+  }];
+</script>

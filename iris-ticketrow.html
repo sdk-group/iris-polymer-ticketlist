@@ -1,0 +1,70 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iris-polymer-importer/iris-importer.html">
+
+
+<dom-module id="iris-ticketrow">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+
+
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'iris-ticketrow',
+        properties: {
+          ticket: {
+            type: Object,
+            value: function() {
+              return {};
+            }
+          },
+          rowModel: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          },
+          isHeader: {
+            type: Boolean,
+            value: function() {
+              return false;
+            }
+          }
+        },
+        ready() {
+
+        },
+        expandItem() {
+
+
+
+        },
+        ticketAction() {
+          let selected = this.$.list.selected;
+        },
+        computeName(fields) {
+          let name = fields.name[0] + '.';
+          let lastname = fields.lastname;
+          let patronymic = fields.patronymic ? fields.patronymic[0] + '.' : '';
+          return `${lastname} ${name} ${patronymic}`;
+        },
+        close() {
+          this.$.dialog.close();
+        },
+        open() {
+          this.$.dialog.open();
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
