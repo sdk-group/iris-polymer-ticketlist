@@ -1,0 +1,87 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iris-polymer-importer/iris-importer.html">
+<link rel="import" href="../../bower_components/iris-polymer-doomclock/iris-doomclock.html">
+
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+<dom-module id="iris-ticketlist-cell">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: inline-block;
+      }
+    </style>
+    <template is="dom-if" if="{{isText}}">
+      <span class="flex">{{value}}</span>
+    </template>
+    <template is="dom-if" if="{{isDoomclock}}">
+      <iris-doomclock start="{{start}}"></iris-doomclock>
+    </template>
+    <template is="dom-if" if="{{isAction}}">
+      <paper-button on-tap="ticketAction">{{value}}</paper-button>
+    </template>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'iris-ticketlist-cell',
+        properties: {
+          ticket: {
+            type: Object,
+            value: function() {
+              return {};
+            }
+          },
+          cellModel: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          }
+        },
+        ready() {
+
+          let cell = this.cellModel;
+
+          if (!cell.transform) {
+            this.isText = true;
+            this.value = this.ticket[cell.field]
+            return;
+          }
+
+          if (cell.transform instanceof Function) {
+            this.isText = true;
+            this.value = cell.transform(this.ticket);
+            return;
+          }
+
+          if (cell.transform == 'doomclock') {
+            this.isDoomclock = true;
+            this.start = this.ticket.time_bounds.start;
+            return;
+          }
+
+          if (cell.transform == 'action') {
+            this.isAction = true;
+            this.action_name = cell.name;
+            this.value = cell.caption;
+            this.start = this.ticket.time_bounds.start;
+            return;
+          }
+        },
+        ticketAction() {
+          this.fire('ticket-action', {
+            action: this.action_name,
+            ticket: this.ticket
+          });
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

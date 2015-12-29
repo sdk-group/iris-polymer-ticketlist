@@ -1,18 +1,12 @@
 <script>
   var test_data = test_data || {};
-  // {
-  //   number: "П-231",
-  //   service: "Test service",
-  //   service_count: 1,
-  //   fields: {
-  //     name: 'My',
-  //     lastname: 'Lastname'
-  //   },
-  //   time_bounds: {
-  //     start: Date.now() - 30 * 1000
-  //   }
-  // }
+
   test_data.row_model = [{
+    label: "Действие",
+    caption: "Принять",
+    name: 'accept',
+    transform: 'action'
+  }, {
     label: "№ талона",
     field: 'label'
   }, {
@@ -24,8 +18,14 @@
   }, {
     label: 'ФИО',
     field: ['name', 'lastname', 'patronymic'],
-    transform: function(name, lastname, patronymic) {
-      return row.name;
+    transform: function(ticket) {
+      'use strict'
+      let client = ticket.client;
+
+      let name = client.name[0] + '.';
+      let lastname = client.lastname;
+      let patronymic = client.patronymic ? client.patronymic[0] + '.' : '';
+      return `${lastname} ${name} ${patronymic}`;
     }
   }, {
     label: 'Время ожидаения',

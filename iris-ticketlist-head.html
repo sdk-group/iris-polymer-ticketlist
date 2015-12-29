@@ -1,0 +1,44 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iris-polymer-importer/iris-importer.html">
+
+
+
+<dom-module id="iris-ticketlist-head">
+  <template>
+    <style include="shared-styles"></style>
+    <style>
+      :host {
+        display: block;
+      }
+      
+      span {
+        text-align: center;
+      }
+    </style>
+
+    <paper-item id="row" class="horizontal layout">
+      <template is="dom-repeat" items="{{rowModel}}" as="field">
+        <span class="flex">{{field.label}}</span>
+      </template>
+    </paper-item>
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+      Polymer({
+        is: 'iris-ticketlist-head',
+        properties: {
+          rowModel: {
+            type: Array,
+            value: function() {
+              return [];
+            }
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

@@ -1,17 +1,29 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iris-polymer-importer/iris-importer.html">
 
+<link rel="import" href="iris-ticketlist-cell.html">
 
-<dom-module id="iris-ticketrow">
+
+<dom-module id="iris-ticketlist-row">
   <template>
     <style include="shared-styles"></style>
     <style>
       :host {
-        display: inline-block;
+        display: block;
+      }
+      
+      span {
+        text-align: center;
       }
     </style>
 
-
+    <paper-item id="row" class="horizontal layout">
+      <template is="dom-repeat" items="{{rowModel}}" as="cellModel">
+        <span class="flex">
+          <iris-ticketlist-cell ticket="{{ticket}}" cell-model="{{cellModel}}"></iris-ticketlist-cell>
+        </span>
+      </template>
+    </paper-item>
 
   </template>
 
@@ -19,7 +31,7 @@
     (function() {
       'use strict';
       Polymer({
-        is: 'iris-ticketrow',
+        is: 'iris-ticketlist-row',
         properties: {
           ticket: {
             type: Object,
@@ -32,36 +44,13 @@
             value: function() {
               return [];
             }
-          },
-          isHeader: {
-            type: Boolean,
-            value: function() {
-              return false;
-            }
           }
         },
-        ready() {
-
-        },
         expandItem() {
-
-
 
         },
         ticketAction() {
           let selected = this.$.list.selected;
-        },
-        computeName(fields) {
-          let name = fields.name[0] + '.';
-          let lastname = fields.lastname;
-          let patronymic = fields.patronymic ? fields.patronymic[0] + '.' : '';
-          return `${lastname} ${name} ${patronymic}`;
-        },
-        close() {
-          this.$.dialog.close();
-        },
-        open() {
-          this.$.dialog.open();
         }
       });
     })();
