@@ -62,7 +62,7 @@
 
           if (cell.transform == 'doomclock') {
             this.isDoomclock = true;
-            this.start = this.ticket.time_bounds.start;
+            this.start = this.ticket.booking_date;
             return;
           }
 
@@ -70,7 +70,6 @@
             this.isAction = true;
             this.action_name = cell.name;
             this.value = cell.caption;
-            this.start = this.ticket.time_bounds.start;
             return;
           }
         },
