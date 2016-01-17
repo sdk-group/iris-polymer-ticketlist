@@ -3,9 +3,8 @@
 
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 
-<link rel="import" href="test/test-data.html">
-<link rel="import" href="iris-ticketlist-row.html">
-<link rel="import" href="iris-ticketlist-head.html">
+<link rel="import" href="../../bower_components/iris-polymer-ticketlist/iris-ticketlist-row.html">
+<link rel="import" href="../../bower_components/iris-polymer-ticketlist/iris-ticketlist-head.html">
 
 
 <dom-module id="iris-ticketlist">
@@ -53,9 +52,7 @@
           },
           rowModel: {
             type: Array,
-            value: function() {
-              return test_data.row_model;
-            }
+            value: []
           }
         }
       });
