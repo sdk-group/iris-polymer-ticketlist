@@ -34,20 +34,11 @@
         is: 'iris-ticketlist-row',
         properties: {
           ticket: {
-            type: Object,
-            value: function() {
-              return {};
-            }
+            type: Object
           },
           rowModel: {
-            type: Array,
-            value: function() {
-              return [];
-            }
+            type: Array
           }
-        },
-        expandItem() {
-
         },
         ticketAction() {
           let selected = this.$.list.selected;

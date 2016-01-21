@@ -17,8 +17,8 @@
     </style>
 
     <paper-item id="row" class="horizontal layout">
-      <template is="dom-repeat" items="{{rowModel}}" as="field">
-        <span class="flex">{{field.label}}</span>
+      <template is="dom-repeat" items="[[rowModel]]" as="field">
+        <span class="flex">[[field.label]]</span>
       </template>
     </paper-item>
 
@@ -31,10 +31,7 @@
         is: 'iris-ticketlist-head',
         properties: {
           rowModel: {
-            type: Array,
-            value: function() {
-              return [];
-            }
+            type: Array
           }
         }
       });
