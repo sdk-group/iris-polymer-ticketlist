@@ -13,14 +13,14 @@
         display: inline-block;
       }
     </style>
-    <template is="dom-if" if="{{isText}}">
-      <span class="flex">{{value}}</span>
+    <template is="dom-if" if="[[isText]]">
+      <span class="flex">[[value]]</span>
     </template>
-    <template is="dom-if" if="{{isDoomclock}}">
-      <iris-doomclock start="{{start}}"></iris-doomclock>
+    <template is="dom-if" if="[[isDoomclock]]">
+      <iris-doomclock start="[[start]]"></iris-doomclock>
     </template>
-    <template is="dom-if" if="{{isAction}}">
-      <paper-button on-tap="ticketAction">{{value}}</paper-button>
+    <template is="dom-if" if="[[isAction]]">
+      <paper-button on-tap="ticketAction">[[value]]</paper-button>
     </template>
 
   </template>
@@ -33,18 +33,13 @@
         properties: {
           ticket: {
             type: Object,
-            value: function() {
-              return {};
-            }
+            observer: '_ticketChanged'
           },
           cellModel: {
-            type: Array,
-            value: function() {
-              return [];
-            }
+            type: Array
           }
         },
-        ready() {
+        _ticketChanged() {
 
           let cell = this.cellModel;
 

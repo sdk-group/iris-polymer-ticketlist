@@ -24,9 +24,9 @@
     </style>
 
     <paper-listbox id="list">
-      <iris-ticketlist-head row-model="[[rowModel]]"></iris-ticketlist-head>
-      <template is="dom-repeat" items="[[tickets]]" as="item">
-        <iris-ticketlist-row row-model="[[rowModel]]" ticket="[[item]]"></iris-ticketlist-row>
+      <iris-ticketlist-head hidden$="[[hideHead]]" row-model="[[rowModel]]"></iris-ticketlist-head>
+      <template is="dom-repeat" items="{{tickets}}" as="item">
+        <iris-ticketlist-row row-model="[[rowModel]]" ticket="{{item}}"></iris-ticketlist-row>
       </template>
     </paper-listbox>
 
@@ -49,6 +49,10 @@
           },
           rowModel: {
             type: Array
+          },
+          hideHead: {
+            type: Boolean,
+            value: false
           }
         }
       });

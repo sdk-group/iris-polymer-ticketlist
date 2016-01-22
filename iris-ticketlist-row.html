@@ -18,9 +18,9 @@
     </style>
 
     <paper-item id="row" class="horizontal layout">
-      <template is="dom-repeat" items="{{rowModel}}" as="cellModel">
+      <template is="dom-repeat" items="[[rowModel]]" as="cellModel">
         <span class="flex">
-          <iris-ticketlist-cell ticket="{{ticket}}" cell-model="{{cellModel}}"></iris-ticketlist-cell>
+          <iris-ticketlist-cell ticket="[[ticket]]" cell-model="[[cellModel]]"></iris-ticketlist-cell>
         </span>
       </template>
     </paper-item>
