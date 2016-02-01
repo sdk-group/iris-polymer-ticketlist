@@ -16,14 +16,16 @@
         text-align: center;
       }
     </style>
+    <template is="dom-if" if="[[isVisible(ticket.state)]]">
 
-    <paper-item id="row" class="horizontal layout">
-      <template is="dom-repeat" items="[[rowModel]]" as="cellModel">
-        <span class="flex">
+      <paper-item id="row" class="horizontal layout">
+        <template is="dom-repeat" items="[[rowModel]]" as="cellModel">
+          <span class="flex">
           <iris-ticketlist-cell ticket="[[ticket]]" cell-model="[[cellModel]]"></iris-ticketlist-cell>
         </span>
-      </template>
-    </paper-item>
+        </template>
+      </paper-item>
+    </template>
 
   </template>
 
@@ -42,6 +44,9 @@
         },
         ticketAction() {
           let selected = this.$.list.selected;
+        },
+        isVisible(state) {
+          return state == 'registered' || state == 'postponed';
         }
       });
     })();
