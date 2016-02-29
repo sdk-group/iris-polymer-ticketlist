@@ -43,6 +43,10 @@
 
           let cell = this.cellModel;
 
+          this.isText = false;
+          this.isDoomclock = false;
+          this.isAction = false;
+
           if (!cell.transform) {
             this.isText = true;
             this.value = this.ticket[cell.field]
@@ -55,9 +59,18 @@
             return;
           }
 
-          if (cell.transform == 'doomclock') {
+          if (cell.transform == 'doomclock' && this.ticket.called) {
+            this.isText = true;
+            this.value = 'Был отложен';
+            return;
+          } else
+          if (cell.transform == 'doomclock' && !_.isArray(this.ticket.time_description)) {
             this.isDoomclock = true;
             this.start = this.ticket.booking_date;
+            return;
+          } else if (cell.transform == 'doomclock' && _.isArray(this.ticket.time_description)) {
+            this.isText = true;
+            this.value = 'Предварительная запись';
             return;
           }
 
