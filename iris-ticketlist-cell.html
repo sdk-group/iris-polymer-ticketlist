@@ -59,16 +59,16 @@
             return;
           }
 
-          if (cell.transform == 'doomclock' && this.ticket.called) {
+          if (cell.transform == 'doomclock' && this.ticket.is_postopned) {
             this.isText = true;
             this.value = 'Был отложен';
             return;
           } else
-          if (cell.transform == 'doomclock' && !_.isArray(this.ticket.time_description)) {
+          if (cell.transform == 'doomclock' && !this.ticket.is_prebook) {
             this.isDoomclock = true;
             this.start = this.ticket.booking_date;
             return;
-          } else if (cell.transform == 'doomclock' && _.isArray(this.ticket.time_description)) {
+          } else if (cell.transform == 'doomclock' && this.ticket.is_prebook) {
             this.isText = true;
             this.value = 'Предварительная запись';
             return;
