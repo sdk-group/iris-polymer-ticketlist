@@ -18,7 +18,8 @@
       
       tr {
         border-bottom: 1px solid;
-        border-color: var(--paper-grey-300);
+        border-color: var(--mydoc-black-400);
+        color: var(--mydoc-black-800);
       }
       
       td,
@@ -26,14 +27,30 @@
         padding: 12px;
       }
       
+      tr th {
+        color: var(--mydoc-black-600);
+      }
+      
       #list {
         width: 100%;
         text-align: center;
         border-collapse: collapse;
       }
+      
+      .table-caption {
+        height: 64px;
+        vertical-align: middle;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        padding: 0 24px;
+        font-size: 20px;
+        color: var(--mydoc-black-1000);
+      }
     </style>
 
-    <h2><content selecot=".caption"></content></h2>
+    <div class="table-caption">
+      <content></content>
+    </div>
     <table id="list">
       <tr hidden$="[[hideHead]]">
         <template is="dom-repeat" items="[[rowModel]]" as="field">
