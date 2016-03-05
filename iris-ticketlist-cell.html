@@ -12,16 +12,26 @@
       :host {
         display: inline-block;
       }
+      
+      paper-button {
+        display: block;
+        margin: 0 auto;
+      }
     </style>
-    <template is="dom-if" if="[[isText]]">
-      <span class="flex">[[value]]</span>
+    <template id="text">
+      [[value]]
     </template>
-    <template is="dom-if" if="[[isDoomclock]]">
+
+    <template id="doomclock">
       <iris-doomclock start="[[start]]"></iris-doomclock>
     </template>
-    <template is="dom-if" if="[[isAction]]">
-      <paper-button on-tap="ticketAction">[[value]]</paper-button>
+
+    <template id="action">
+      <paper-button hidden$="[[isLoading]]" on-tap="test">[[value]]</paper-button>
+      <paper-spinner active="[[isLoading]]" hidden$="[[!isLoading]]" alt="Loading"></paper-spinner>
     </template>
+
+    <span id="stamp"></span>
 
   </template>
 
@@ -30,6 +40,9 @@
       'use strict';
       Polymer({
         is: 'iris-ticketlist-cell',
+        behaviors: [
+          Polymer.Templatizer
+        ],
         properties: {
           ticket: {
             type: Object,
@@ -43,49 +56,67 @@
 
           let cell = this.cellModel;
 
-          this.isText = false;
-          this.isDoomclock = false;
-          this.isAction = false;
-
           if (!cell.transform) {
-            this.isText = true;
             this.value = this.ticket[cell.field]
-            return;
+            return this.makeStamp('text');
           }
 
           if (cell.transform instanceof Function) {
-            this.isText = true;
             this.value = cell.transform(this.ticket);
-            return;
+            return this.makeStamp('text');
           }
 
           if (cell.transform == 'doomclock' && this.ticket.is_postopned) {
-            this.isText = true;
             this.value = 'Был отложен';
-            return;
+            return this.makeStamp('text');
           } else
           if (cell.transform == 'doomclock' && !this.ticket.is_prebook) {
-            this.isDoomclock = true;
             this.start = this.ticket.booking_date;
-            return;
+            return this.makeStamp('doomclock');
           } else if (cell.transform == 'doomclock' && this.ticket.is_prebook) {
-            this.isText = true;
             this.value = 'Предварительная запись';
-            return;
+            return this.makeStamp('text');
           }
 
           if (cell.transform == 'action') {
-            this.isAction = true;
             this.action_name = cell.name;
             this.value = cell.caption;
-            return;
+            return this.makeStamp('action');
           }
+
+
         },
-        ticketAction() {
-          this.fire('ticket-action', {
-            action: this.action_name,
-            ticket: this.ticket
+        makeStamp(name) {
+
+          var template = this.$[name];
+
+          this.templatize(template);
+          var clone = this.stamp({
+            value: this.value
           });
+          this.clone = clone;
+
+          if (this.start) clone.start = this.start;
+          clone.ticketAction = this.ticketAction;
+          clone.isLoading = false;
+          Polymer.dom(this.$.stamp).appendChild(clone.root);
+        },
+        test() {
+          this.clone.isLoading = true;
+          // this.fire('ticket-action', {
+          //   action: this.action_name,
+          //   ticket: this.ticket
+          // });
+        },
+        _listenImpl: function(node, eventName, methodName) {
+          var model = this;
+          var host = this.dataHost;
+          var handler = host._createEventHandler(node, eventName, methodName);
+          var decorated = function(e) {
+            e.model = model;
+            handler(e);
+          };
+          host._listen(node, eventName, decorated);
         }
       });
     })();

@@ -4,8 +4,8 @@
 <link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
 
 <link rel="import" href="../../bower_components/iris-polymer-ticketlist/iris-ticketlist-row.html">
-<link rel="import" href="../../bower_components/iris-polymer-ticketlist/iris-ticketlist-head.html">
 
+<link rel="import" href="iris-ticketlist-cell.html">
 
 <dom-module id="iris-ticketlist">
   <template>
@@ -16,19 +16,39 @@
         padding: 0 10px;
       }
       
-      iris-ticketlist-row,
-      iris-ticketlist-head {
+      tr {
         border-bottom: 1px solid;
         border-color: var(--paper-grey-300);
       }
+      
+      td,
+      th {
+        padding: 12px;
+      }
+      
+      #list {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+      }
     </style>
 
-    <paper-listbox id="list">
-      <iris-ticketlist-head hidden$="[[hideHead]]" row-model="[[rowModel]]"></iris-ticketlist-head>
-      <template is="dom-repeat" items="{{tickets}}" as="item">
-        <iris-ticketlist-row row-model="[[rowModel]]" ticket="{{item}}"></iris-ticketlist-row>
+    <table id="list">
+      <tr hidden$="[[hideHead]]">
+        <template is="dom-repeat" items="[[rowModel]]" as="field">
+          <th>[[field.label]]</th>
+        </template>
+      </tr>
+      <template is="dom-repeat" items="[[tickets]]" filter="filterByState" as="item">
+        <tr>
+          <template is="dom-repeat" items="[[rowModel]]" as="cellModel">
+            <td>
+              <iris-ticketlist-cell ticket="[[item]]" cell-model="[[cellModel]]"></iris-ticketlist-cell>
+            </td>
+          </template>
+        </tr>
       </template>
-    </paper-listbox>
+    </table>
 
   </template>
 
@@ -54,6 +74,10 @@
             type: Boolean,
             value: false
           }
+        },
+        filterByState(item) {
+          let state = item.state;
+          return state == 'registered' || state == 'postponed'
         }
       });
     })();
