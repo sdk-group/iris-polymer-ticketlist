@@ -20,15 +20,22 @@
         border-bottom: 1px solid;
         border-color: var(--mydoc-black-400);
         color: var(--mydoc-black-800);
+        height: 48px;
       }
       
       td,
       th {
-        padding: 12px;
+        padding: 0 12px;
+      }
+      
+      tr td {
+        font-size: 13px;
       }
       
       tr th {
         color: var(--mydoc-black-600);
+        height: 56px;
+        font-size: 12px;
       }
       
       #list {
@@ -52,7 +59,7 @@
       <content></content>
     </div>
     <table id="list">
-      <tr hidden$="[[hideHead]]">
+      <tr class="table-head" hidden$="[[hideHead]]">
         <template is="dom-repeat" items="[[rowModel]]" as="field">
           <th>[[field.label]]</th>
         </template>

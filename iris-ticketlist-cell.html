@@ -27,7 +27,7 @@
     </template>
 
     <template id="action">
-      <paper-button hidden$="[[isLoading]]" on-tap="test">[[value]]</paper-button>
+      <paper-button hidden$="[[isLoading]]" on-tap="buttonAction">[[value]]</paper-button>
       <paper-spinner active="[[isLoading]]" hidden$="[[!isLoading]]" alt="Loading"></paper-spinner>
     </template>
 
@@ -53,6 +53,7 @@
           }
         },
         _ticketChanged() {
+          this.cancelDebouncer('cancel-spinner');
 
           let cell = this.cellModel;
 
@@ -99,14 +100,18 @@
           if (this.start) clone.start = this.start;
           clone.ticketAction = this.ticketAction;
           clone.isLoading = false;
+          Polymer.dom(this.$.stamp).innerHtml = '';
           Polymer.dom(this.$.stamp).appendChild(clone.root);
         },
-        test() {
+        buttonAction() {
           this.clone.isLoading = true;
-          // this.fire('ticket-action', {
-          //   action: this.action_name,
-          //   ticket: this.ticket
-          // });
+          this.debounce('cancel-spinner', () => {
+            this.clone.isLoading = false;
+          }, 15000);
+          this.fire('ticket-action', {
+            action: this.action_name,
+            ticket: this.ticket
+          });
         },
         _listenImpl: function(node, eventName, methodName) {
           var model = this;
