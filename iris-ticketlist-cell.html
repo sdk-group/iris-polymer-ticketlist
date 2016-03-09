@@ -96,11 +96,11 @@
             value: this.value
           });
           this.clone = clone;
-
+          console.log(this.ticket);
           if (this.start) clone.start = this.start;
           clone.ticketAction = this.ticketAction;
           clone.isLoading = false;
-          Polymer.dom(this.$.stamp).innerHtml = '';
+          Polymer.dom(this.$.stamp).innerHTML = '';
           Polymer.dom(this.$.stamp).appendChild(clone.root);
         },
         buttonAction() {
