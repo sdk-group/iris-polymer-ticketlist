@@ -18,6 +18,11 @@
         margin: 0 auto;
       }
     </style>
+    <template id="priorities">
+      <template is="dom-repeat" items="[[value]]">
+        <iron-icon icon="[[item]]"></iron-icon>
+      </template>
+    </template>
     <template id="text">
       [[value]]
     </template>
@@ -52,6 +57,13 @@
             type: Array
           }
         },
+        ready() {
+          this.icons_list = {
+            veteran: "accessible",
+            invalid: "star-border",
+            manual_down: "arrow-downward"
+          }
+        },
         _ticketChanged() {
           this.cancelDebouncer('cancel-spinner');
 
@@ -65,6 +77,13 @@
           if (cell.transform instanceof Function) {
             this.value = cell.transform(this.ticket);
             return this.makeStamp('text');
+          }
+
+          if (cell.transform == 'priorities') {
+            let priorities = ticket ? ticket.priority || {} : {};
+
+            this.value = _.map(priorities, (p, name) => this.icons_list[name] ? this.icons_list[name] : 'arrow-upward');
+            return this.makeStamp('priorities');
           }
 
           if (cell.transform == 'doomclock' && this.ticket.is_postopned) {
