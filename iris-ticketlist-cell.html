@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/iris-polymer-importer/iris-importer.html">
 <link rel="import" href="../../bower_components/iris-polymer-doomclock/iris-doomclock.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
@@ -18,6 +19,12 @@
         margin: 0 auto;
       }
     </style>
+    <template id="priority">
+      <template is="dom-repeat" items="[[value]]">
+        <iron-icon icon="[[item]]"></iron-icon>
+      </template>
+    </template>
+
     <template id="text">
       [[value]]
     </template>
@@ -53,6 +60,11 @@
           }
         },
         _ticketChanged() {
+          let icons_list = {
+            veteran: "accessible",
+            invalid: "star-border",
+            manual_down: "arrow-downward"
+          }
           this.cancelDebouncer('cancel-spinner');
 
           let cell = this.cellModel;
@@ -67,14 +79,20 @@
             return this.makeStamp('text');
           }
 
+          if (cell.transform == 'priority') {
+            this.value = _.map(this.ticket.priority, (p, name) => icons_list[name] ? icons_list[name] : 'arrow-upward');
+            return this.makeStamp('priority');
+          }
+
           if (cell.transform == 'doomclock' && this.ticket.is_postopned) {
             this.value = 'Был отложен';
             return this.makeStamp('text');
-          } else
+          }
           if (cell.transform == 'doomclock' && !this.ticket.is_prebook) {
             this.start = this.ticket.booking_date;
             return this.makeStamp('doomclock');
-          } else if (cell.transform == 'doomclock' && this.ticket.is_prebook) {
+          }
+          if (cell.transform == 'doomclock' && this.ticket.is_prebook) {
             this.value = 'Предварительная запись';
             return this.makeStamp('text');
           }
