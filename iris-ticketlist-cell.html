@@ -19,29 +19,26 @@
         margin: 0 auto;
       }
     </style>
-    <<<<<<< HEAD <template id="priorities">
-      =======
-      <template id="priority">
-        >>>>>>> origin/master
-        <template is="dom-repeat" items="[[value]]">
-          <iron-icon icon="[[item]]"></iron-icon>
-        </template>
+    <template id="priorities">
+      <template is="dom-repeat" items="[[value]]">
+        <iron-icon icon="[[item]]"></iron-icon>
       </template>
-      <<<<<<< HEAD=======>>>>>>> origin/master
-        <template id="text">
-          [[value]]
-        </template>
+    </template>
 
-        <template id="doomclock">
-          <iris-doomclock start="[[start]]"></iris-doomclock>
-        </template>
+    <template id="text">
+      [[value]]
+    </template>
 
-        <template id="action">
-          <paper-button hidden$="[[isLoading]]" on-tap="buttonAction">[[value]]</paper-button>
-          <paper-spinner active="[[isLoading]]" hidden$="[[!isLoading]]" alt="Loading"></paper-spinner>
-        </template>
+    <template id="doomclock">
+      <iris-doomclock start="[[start]]"></iris-doomclock>
+    </template>
 
-        <span id="stamp"></span>
+    <template id="action">
+      <paper-button hidden$="[[isLoading]]" on-tap="buttonAction">[[value]]</paper-button>
+      <paper-spinner active="[[isLoading]]" hidden$="[[!isLoading]]" alt="Loading"></paper-spinner>
+    </template>
+
+    <span id="stamp"></span>
 
   </template>
 
