@@ -57,13 +57,16 @@
           },
           cellModel: {
             type: Array
-          }
-        },
-        ready() {
-          this.icons_list = {
-            veteran: "accessible",
-            invalid: "star-border",
-            manual_down: "arrow-downward"
+          },
+          iconsList: {
+            type: Object,
+            value: function() {
+              return {
+                veteran: "accessible",
+                invalid: "star-border",
+                manual_down: "arrow-downward"
+              };
+            }
           }
         },
         _ticketChanged() {
@@ -87,9 +90,8 @@
           }
 
           if (cell.transform == 'priorities') {
-            let priorities = ticket ? ticket.priority || {} : {};
-
-            this.value = _.map(priorities, (p, name) => this.icons_list[name] ? this.icons_list[name] : 'arrow-upward');
+            let priorities = this.ticket ? this.ticket.priority || {} : {};
+            this.value = _.map(priorities, (p, name) => this.iconsList[name] ? this.iconsList[name] : 'arrow-upward');
             return this.makeStamp('priorities');
           }
 
