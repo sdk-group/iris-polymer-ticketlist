@@ -4,7 +4,7 @@
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
 
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
-
+<link rel="import" href="../iris-polymer-ticket-status-bar/iris-ticket-status-bar.html">
 
 <dom-module id="iris-ticketlist-cell">
   <template>
@@ -13,16 +13,14 @@
       :host {
         display: inline-block;
       }
-      
+
       paper-button {
         display: block;
         margin: 0 auto;
       }
     </style>
     <template id="priorities">
-      <template is="dom-repeat" items="[[value]]">
-        <iron-icon icon="[[item]]"></iron-icon>
-      </template>
+      <iris-ticket-status-bar ticket="[[ticket]]"></iris-ticket-status-bar>
     </template>
 
     <template id="text">
@@ -57,16 +55,6 @@
           },
           cellModel: {
             type: Array
-          },
-          iconsList: {
-            type: Object,
-            value: function() {
-              return {
-                veteran: "star-border",
-                invalid: "accessible",
-                manual_down: "arrow-downward"
-              };
-            }
           }
         },
         _ticketChanged() {
@@ -86,8 +74,6 @@
           }
 
           if (cell.transform == 'priorities') {
-            let priorities = this.ticket ? this.ticket.priority || {} : {};
-            this.value = _.map(priorities, (p, name) => this.iconsList[name] ? this.iconsList[name] : 'arrow-upward');
             return this.makeStamp('priorities');
           }
 
